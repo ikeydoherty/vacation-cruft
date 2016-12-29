@@ -9,21 +9,33 @@
  * (at your option) any later version.
  */
 
-#include <stdlib.h>
+#pragma once
 
-#include "app.h"
+#include "util.h"
 
-int main(int argc, char **argv)
-{
-        autofree(SnakeApp) *app = NULL;
+/**
+ * Global state for the application
+ */
+typedef struct SnakeApp {
+        int __reserved1;
+} SnakeApp;
 
-        app = snake_app_new();
-        if (!app) {
-                return EXIT_FAILURE;
-        }
+/**
+ * Construct a new SnakeApp instance and perform any early setup
+ */
+SnakeApp *snake_app_new(void);
 
-        return snake_app_run(app);
-}
+/**
+ * Teardown the SnakeApp and return any resources
+ */
+void snake_app_free(SnakeApp *app);
+
+/**
+ * Run the main loop of the application
+ */
+int snake_app_run(SnakeApp *app);
+
+DEF_AUTOFREE(SnakeApp, snake_app_free)
 
 /*
  * Editor modelines  -  https://www.wireshark.org/tools/modelines.html

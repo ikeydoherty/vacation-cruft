@@ -9,20 +9,29 @@
  * (at your option) any later version.
  */
 
-#include <stdlib.h>
-
 #include "app.h"
 
-int main(int argc, char **argv)
+SnakeApp *snake_app_new()
 {
-        autofree(SnakeApp) *app = NULL;
+        SnakeApp *ret = NULL;
 
-        app = snake_app_new();
+        ret = calloc(1, sizeof(SnakeApp));
+
+        /** TODO: Init resources! */
+        return ret;
+}
+
+void snake_app_free(SnakeApp *app)
+{
         if (!app) {
-                return EXIT_FAILURE;
+                return;
         }
+        free(app);
+}
 
-        return snake_app_run(app);
+int snake_app_run(SnakeApp *app)
+{
+        return EXIT_FAILURE;
 }
 
 /*

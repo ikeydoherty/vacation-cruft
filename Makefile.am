@@ -10,6 +10,8 @@ bin_PROGRAMS = \
 	snake
 
 snake_SOURCES = \
+	src/snake/app.h \
+	src/snake/app.c \
 	src/snake/main.c \
 	src/snake/util.h
 

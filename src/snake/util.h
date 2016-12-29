@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <stdlib.h>
+
 /**
  * As used in libnica, etc.
  */
