@@ -10,7 +10,8 @@ bin_PROGRAMS = \
 	snake
 
 snake_SOURCES = \
-	src/snake/main.c
+	src/snake/main.c \
+	src/snake/util.h
 
 snake_CFLAGS = \
 	$(SDL_CFLAGS) \
