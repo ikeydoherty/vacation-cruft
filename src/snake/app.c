@@ -28,7 +28,7 @@ SnakeApp *snake_app_new()
         }
 
         /* create the window */
-        ret->window = SDL_CreateWindow("snake",
+        ret->window = SDL_CreateWindow("Snake",
                                        SDL_WINDOWPOS_UNDEFINED,
                                        SDL_WINDOWPOS_UNDEFINED,
                                        800,
