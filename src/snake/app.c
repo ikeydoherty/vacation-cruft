@@ -71,7 +71,15 @@ void snake_app_free(SnakeApp *self)
 
 int snake_app_run(SnakeApp *self)
 {
-        return EXIT_FAILURE;
+        int ret = EXIT_SUCCESS;
+
+        /* Get us on screen */
+        SDL_ShowWindow(self->window);
+
+        /* TODO: Add some kind of PollEvent loop */
+        SDL_Delay(2000);
+
+        return ret;
 }
 
 /*
