@@ -30,7 +30,7 @@ void snake_app_update_keyboard(SnakeApp *self, SDL_KeyboardEvent *event)
         }
 }
 
-void snake_app_update(SnakeApp *self)
+void snake_app_update(SnakeApp *self, RenderTarget *target)
 {
         SDL_Event event = { 0 };
 

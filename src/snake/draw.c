@@ -11,7 +11,7 @@
 
 #include "app.h"
 
-void snake_app_draw(SnakeApp *self)
+void snake_app_draw(SnakeApp *self, RenderTarget *target)
 {
         /* Clear the background */
         SDL_SetRenderDrawColor(self->render, 0, 0, 0, 255);

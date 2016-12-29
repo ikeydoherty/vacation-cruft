@@ -14,6 +14,7 @@
 #include <SDL.h>
 #include <stdbool.h>
 
+#include "sprite.h"
 #include "util.h"
 
 /**
@@ -39,12 +40,12 @@ void snake_app_free(SnakeApp *self);
 /**
  * Handle events and update the game state
  */
-void snake_app_update(SnakeApp *self);
+void snake_app_update(SnakeApp *self, RenderTarget *target);
 
 /**
  * Render the current game state
  */
-void snake_app_draw(SnakeApp *self);
+void snake_app_draw(SnakeApp *self, RenderTarget *target);
 
 /**
  * Set the application to be full screen (fake mode)
