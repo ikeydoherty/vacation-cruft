@@ -18,6 +18,9 @@ void snake_app_draw(SnakeApp *self)
         SDL_RenderClear(self->render);
 
         /* TODO: Draw sprites */
+
+        /* Flip to screen */
+        SDL_RenderPresent(self->render);
 }
 
 /*

@@ -39,7 +39,9 @@ SnakeApp *snake_app_new()
         }
 
         /* create a 2d renderer */
-        ret->render = SDL_CreateRenderer(ret->window, -1, SDL_RENDERER_ACCELERATED);
+        ret->render = SDL_CreateRenderer(ret->window,
+                                         -1,
+                                         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (!ret->render) {
                 goto bail;
         }
