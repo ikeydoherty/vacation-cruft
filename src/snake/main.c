@@ -13,7 +13,7 @@
 
 #include "app.h"
 
-int main(int argc, char **argv)
+int main(__unused__ int argc, __unused__ char **argv)
 {
         autofree(SnakeApp) *app = NULL;
 

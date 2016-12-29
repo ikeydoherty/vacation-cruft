@@ -27,6 +27,8 @@
 
 #define autofree(N) __attribute__((cleanup(_autofree_func_##N))) N
 
+#define __unused__ __attribute__((unused))
+
 /*
  * Editor modelines  -  https://www.wireshark.org/tools/modelines.html
  *
