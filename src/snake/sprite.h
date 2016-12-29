@@ -12,6 +12,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <stddef.h>
 
 /**
  * A RenderTarget is passed to a Sprite for rendering & updating
@@ -19,6 +20,7 @@
 typedef struct FrameInfo {
         SDL_Renderer *render;
         SDL_Rect rect;
+        uint32_t ticks;
 } FrameInfo;
 
 /**

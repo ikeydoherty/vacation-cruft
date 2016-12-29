@@ -75,7 +75,9 @@ void snake_app_free(SnakeApp *self)
 int snake_app_run(SnakeApp *self)
 {
         int ret = EXIT_SUCCESS;
+        uint32_t tick_start = 0;
         FrameInfo frame = {.render = self->render,
+                           .ticks = 0,
                            .rect = (SDL_Rect){
                                .x = 0, .y = 0, .w = 800, .h = 600,
                            } };
@@ -84,9 +86,11 @@ int snake_app_run(SnakeApp *self)
         SDL_ShowWindow(self->window);
 
         self->running = true;
+        tick_start = 0;
 
         /* Handle main loop */
         while (self->running) {
+                frame.ticks = SDL_GetTicks() - tick_start;
                 snake_app_update(self, &frame);
                 snake_app_draw(self, &frame);
 
