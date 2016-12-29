@@ -9,11 +9,18 @@
  * (at your option) any later version.
  */
 
+#include <SDL.h>
+
 #include "app.h"
 
 SnakeApp *snake_app_new()
 {
         SnakeApp *ret = NULL;
+
+        if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+                fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
+                return NULL;
+        }
 
         ret = calloc(1, sizeof(SnakeApp));
 
@@ -27,6 +34,11 @@ void snake_app_free(SnakeApp *app)
                 return;
         }
         free(app);
+
+        fprintf(stderr, "debug: Closing SDL\n");
+
+        SDL_QuitSubSystem(SDL_INIT_VIDEO);
+        SDL_Quit();
 }
 
 int snake_app_run(SnakeApp *app)
