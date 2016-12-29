@@ -18,6 +18,21 @@ void snake_app_update(SnakeApp *self)
         /* TODO: Handle keyboard events and whatnot */
         while (SDL_PollEvent(&event)) {
                 switch (event.type) {
+                case SDL_KEYDOWN:
+                        /* Q = quit */
+                        if (event.key.keysym.sym == SDLK_q) {
+                                self->running = false;
+                                return;
+                        }
+                        break;
+                case SDL_KEYUP:
+                        /* Alt+Enter = toggle full screen */
+                        if (event.key.keysym.sym == SDLK_RETURN &&
+                            (event.key.keysym.mod & KMOD_ALT)) {
+                                snake_app_set_fullscreen(self, !self->fullscreen);
+                                return;
+                        }
+                        break;
                 /* Immediately quit */
                 case SDL_QUIT:
                         self->running = false;
