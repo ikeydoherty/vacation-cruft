@@ -76,6 +76,8 @@ int snake_app_run(SnakeApp *self)
         /* Get us on screen */
         SDL_ShowWindow(self->window);
 
+        self->running = true;
+
         /* Handle main loop */
         while (self->running) {
                 snake_app_update(self);
