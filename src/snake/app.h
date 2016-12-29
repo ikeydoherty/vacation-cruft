@@ -23,6 +23,7 @@ typedef struct SnakeApp {
         SDL_Window *window;
         SDL_Renderer *render;
         bool running;
+        bool fullscreen;
 } SnakeApp;
 
 /**
@@ -44,6 +45,11 @@ void snake_app_update(SnakeApp *self);
  * Render the current game state
  */
 void snake_app_draw(SnakeApp *self);
+
+/**
+ * Set the application to be full screen (fake mode)
+ */
+void snake_app_set_fullscreen(SnakeApp *self, bool fullscreen);
 
 /**
  * Run the main loop of the application

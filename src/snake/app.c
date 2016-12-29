@@ -91,6 +91,16 @@ int snake_app_run(SnakeApp *self)
         return ret;
 }
 
+void snake_app_set_fullscreen(SnakeApp *self, bool fullscreen)
+{
+        if (self->fullscreen == fullscreen) {
+                return;
+        }
+
+        self->fullscreen = fullscreen;
+        SDL_SetWindowFullscreen(self->window, fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+}
+
 /*
  * Editor modelines  -  https://www.wireshark.org/tools/modelines.html
  *
