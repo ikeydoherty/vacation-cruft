@@ -40,12 +40,12 @@ void snake_app_free(SnakeApp *self);
 /**
  * Handle events and update the game state
  */
-void snake_app_update(SnakeApp *self, RenderTarget *target);
+void snake_app_update(SnakeApp *self, FrameInfo *frame);
 
 /**
  * Render the current game state
  */
-void snake_app_draw(SnakeApp *self, RenderTarget *target);
+void snake_app_draw(SnakeApp *self, FrameInfo *frame);
 
 /**
  * Set the application to be full screen (fake mode)

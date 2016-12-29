@@ -75,10 +75,10 @@ void snake_app_free(SnakeApp *self)
 int snake_app_run(SnakeApp *self)
 {
         int ret = EXIT_SUCCESS;
-        RenderTarget target = {.render = self->render,
-                               .rect = (SDL_Rect){
-                                   .x = 0, .y = 0, .w = 800, .h = 600,
-                               } };
+        FrameInfo frame = {.render = self->render,
+                           .rect = (SDL_Rect){
+                               .x = 0, .y = 0, .w = 800, .h = 600,
+                           } };
 
         /* Get us on screen */
         SDL_ShowWindow(self->window);
@@ -87,8 +87,8 @@ int snake_app_run(SnakeApp *self)
 
         /* Handle main loop */
         while (self->running) {
-                snake_app_update(self, &target);
-                snake_app_draw(self, &target);
+                snake_app_update(self, &frame);
+                snake_app_draw(self, &frame);
 
                 /* TODO: cap fps */
         }

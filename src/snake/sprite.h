@@ -16,10 +16,10 @@
 /**
  * A RenderTarget is passed to a Sprite for rendering & updating
  */
-typedef struct RenderTarget {
+typedef struct FrameInfo {
         SDL_Renderer *render;
         SDL_Rect rect;
-} RenderTarget;
+} FrameInfo;
 
 /**
  * A Sprite provides us with a very simple system to generically render and
@@ -30,12 +30,12 @@ typedef struct Sprite {
          * Perform the update cycle for this sprite in relation to global
          * events.
          */
-        void (*update)(struct Sprite *, RenderTarget *);
+        void (*update)(struct Sprite *, FrameInfo *);
 
         /**
          * Draw to the given renderer
          */
-        void (*draw)(struct Sprite *, RenderTarget *);
+        void (*draw)(struct Sprite *, FrameInfo *);
 
 } Sprite;
 
