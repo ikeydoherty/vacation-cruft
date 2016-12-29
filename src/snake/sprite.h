@@ -35,7 +35,7 @@ typedef struct Sprite {
         /**
          * Draw to the given renderer
          */
-        void (*draw)(struct Sprite *self, RenderTarget *);
+        void (*draw)(struct Sprite *, RenderTarget *);
 
 } Sprite;
 
