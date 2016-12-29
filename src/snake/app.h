@@ -11,13 +11,16 @@
 
 #pragma once
 
+#include <SDL.h>
+
 #include "util.h"
 
 /**
  * Global state for the application
  */
 typedef struct SnakeApp {
-        int __reserved1;
+        SDL_Window *window;
+        SDL_Renderer *render;
 } SnakeApp;
 
 /**
@@ -28,12 +31,12 @@ SnakeApp *snake_app_new(void);
 /**
  * Teardown the SnakeApp and return any resources
  */
-void snake_app_free(SnakeApp *app);
+void snake_app_free(SnakeApp *self);
 
 /**
  * Run the main loop of the application
  */
-int snake_app_run(SnakeApp *app);
+int snake_app_run(SnakeApp *self);
 
 DEF_AUTOFREE(SnakeApp, snake_app_free)
 

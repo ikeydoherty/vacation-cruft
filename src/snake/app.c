@@ -23,25 +23,53 @@ SnakeApp *snake_app_new()
         }
 
         ret = calloc(1, sizeof(SnakeApp));
+        if (!ret) {
+                return ret;
+        }
 
-        /** TODO: Init resources! */
+        /* create the window */
+        ret->window = SDL_CreateWindow("snake",
+                                       SDL_WINDOWPOS_UNDEFINED,
+                                       SDL_WINDOWPOS_UNDEFINED,
+                                       800,
+                                       600,
+                                       SDL_WINDOW_HIDDEN);
+        if (!ret->window) {
+                goto bail;
+        }
+
+        /* create a 2d renderer */
+        ret->render = SDL_CreateRenderer(ret->window, -1, SDL_RENDERER_ACCELERATED);
+        if (!ret->render) {
+                goto bail;
+        }
+
         return ret;
+
+/* Something disastrous happened */
+bail:
+        snake_app_free(ret);
+        return NULL;
 }
 
-void snake_app_free(SnakeApp *app)
+void snake_app_free(SnakeApp *self)
 {
-        if (!app) {
+        if (!self) {
                 return;
         }
-        free(app);
 
+        /* Free our resources */
+        SDL_DestroyWindow(self->window);
+        SDL_DestroyRenderer(self->render);
+        free(self);
+
+        /* Free SDL resources */
         fprintf(stderr, "debug: Closing SDL\n");
-
         SDL_QuitSubSystem(SDL_INIT_VIDEO);
         SDL_Quit();
 }
 
-int snake_app_run(SnakeApp *app)
+int snake_app_run(SnakeApp *self)
 {
         return EXIT_FAILURE;
 }
