@@ -12,7 +12,9 @@ bin_PROGRAMS = \
 snake_SOURCES = \
 	src/snake/app.h \
 	src/snake/app.c \
+	src/snake/draw.c \
 	src/snake/main.c \
+	src/snake/update.c \
 	src/snake/util.h
 
 snake_CFLAGS = \

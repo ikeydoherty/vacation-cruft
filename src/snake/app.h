@@ -12,6 +12,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <stdbool.h>
 
 #include "util.h"
 
@@ -21,6 +22,7 @@
 typedef struct SnakeApp {
         SDL_Window *window;
         SDL_Renderer *render;
+        bool running;
 } SnakeApp;
 
 /**
@@ -32,6 +34,16 @@ SnakeApp *snake_app_new(void);
  * Teardown the SnakeApp and return any resources
  */
 void snake_app_free(SnakeApp *self);
+
+/**
+ * Handle events and update the game state
+ */
+void snake_app_update(SnakeApp *self);
+
+/**
+ * Render the current game state
+ */
+void snake_app_draw(SnakeApp *self);
 
 /**
  * Run the main loop of the application

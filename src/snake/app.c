@@ -76,8 +76,13 @@ int snake_app_run(SnakeApp *self)
         /* Get us on screen */
         SDL_ShowWindow(self->window);
 
-        /* TODO: Add some kind of PollEvent loop */
-        SDL_Delay(2000);
+        /* Handle main loop */
+        while (self->running) {
+                snake_app_update(self);
+                snake_app_draw(self);
+
+                /* TODO: cap fps */
+        }
 
         return ret;
 }
