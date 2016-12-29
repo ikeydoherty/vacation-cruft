@@ -11,32 +11,42 @@
 
 #include "app.h"
 
+/**
+ * Handle updates from keyboard input
+ */
+void snake_app_update_keyboard(SnakeApp *self, SDL_KeyboardEvent *event)
+{
+        /* Handle pressed events */
+        if (event->state == SDL_PRESSED) {
+                if (event->keysym.sym == SDLK_q) {
+                        self->running = false;
+                }
+                return;
+        }
+
+        /* Handle released events */
+        if (event->keysym.sym == SDLK_RETURN && (event->keysym.mod & KMOD_ALT)) {
+                snake_app_set_fullscreen(self, !self->fullscreen);
+        }
+}
+
 void snake_app_update(SnakeApp *self)
 {
         SDL_Event event = { 0 };
 
-        /* TODO: Handle keyboard events and whatnot */
+        /* Handle all events in this update */
         while (SDL_PollEvent(&event)) {
                 switch (event.type) {
                 case SDL_KEYDOWN:
-                        /* Q = quit */
-                        if (event.key.keysym.sym == SDLK_q) {
-                                self->running = false;
-                                return;
-                        }
-                        break;
                 case SDL_KEYUP:
-                        /* Alt+Enter = toggle full screen */
-                        if (event.key.keysym.sym == SDLK_RETURN &&
-                            (event.key.keysym.mod & KMOD_ALT)) {
-                                snake_app_set_fullscreen(self, !self->fullscreen);
-                                return;
-                        }
+                        snake_app_update_keyboard(self, &event.key);
                         break;
                 /* Immediately quit */
                 case SDL_QUIT:
                         self->running = false;
                         return;
+                default:
+                        break;
                 }
         }
 }
