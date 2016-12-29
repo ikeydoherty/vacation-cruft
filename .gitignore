@@ -16,4 +16,4 @@ missing
 *.o
 
 # Binaries
-snake
+/snake
