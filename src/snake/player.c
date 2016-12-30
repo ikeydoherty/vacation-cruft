@@ -154,6 +154,16 @@ void player_update(Player *self, FrameInfo *frame)
 
         head->x = (int)(head->start_x + deltaX);
         head->y = (int)(head->start_y + deltaY);
+
+        for (int i = 1; i < self->n_segments; i++) {
+                PlayerSegment *current = &self->segments[i];
+
+                double deltaX = (double)(current->target_x - current->start_x) * factor;
+                double deltaY = (double)(current->target_y - current->start_y) * factor;
+
+                current->x = (int)(current->start_x + deltaX);
+                current->y = (int)(current->start_y + deltaY);
+        }
 }
 
 static void render_segment(Player *self, FrameInfo *info, PlayerSegment *segment, int i)
