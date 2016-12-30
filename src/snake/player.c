@@ -34,6 +34,30 @@ void player_free(Player *self)
 
 void player_set_direction(Player *self, PlayerDirection direction)
 {
+        /* Forbid inversing the direction */
+        switch (direction) {
+        case DIR_UP:
+                if (self->dir == DIR_DOWN) {
+                        return;
+                }
+                break;
+        case DIR_DOWN:
+                if (self->dir == DIR_UP) {
+                        return;
+                }
+                break;
+        case DIR_LEFT:
+                if (self->dir == DIR_RIGHT) {
+                        return;
+                }
+                break;
+        case DIR_RIGHT:
+        default:
+                if (self->dir == DIR_LEFT) {
+                        return;
+                }
+                break;
+        }
         self->dir = direction;
 }
 
