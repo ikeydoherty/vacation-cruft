@@ -31,6 +31,12 @@ void tile_sheet_render(TileSheet *sheet, int column, int row, SDL_Renderer *rend
                        SDL_Rect target);
 
 /**
+ * Render a given tile using SDL_RenderCopyEx
+ */
+void tile_sheet_render_ex(TileSheet *sheet, int column, int row, SDL_Renderer *render,
+                          SDL_Rect target, double angle, SDL_Point *center, SDL_RendererFlip flip);
+
+/**
  * Free a previously created TileSheet
  */
 void tile_sheet_free(TileSheet *self);

@@ -90,7 +90,23 @@ void player_draw(Player *self, FrameInfo *info)
 {
         /* DEMO CODE */
         SDL_Rect rect = {.x = self->x, .y = self->y, .w = 32, .h = 32 };
-        tile_sheet_render(self->sheet, 1, 0, info->render, rect);
+        double angle = 0.0;
+        switch (self->dir) {
+        case DIR_UP:
+                angle = -90.0;
+                break;
+        case DIR_DOWN:
+                angle = 90.0;
+                break;
+        case DIR_LEFT:
+                angle = -180.0;
+                break;
+        case DIR_RIGHT:
+        default:
+                angle = 0.0;
+                break;
+        }
+        tile_sheet_render_ex(self->sheet, 1, 0, info->render, rect, angle, NULL, SDL_FLIP_NONE);
 }
 
 /*

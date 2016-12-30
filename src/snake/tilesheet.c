@@ -74,6 +74,16 @@ void tile_sheet_render(TileSheet *self, int column, int row, SDL_Renderer *rende
         SDL_RenderCopy(render, self->texture, &source, &target);
 }
 
+void tile_sheet_render_ex(TileSheet *self, int column, int row, SDL_Renderer *render,
+                          SDL_Rect target, double angle, SDL_Point *center, SDL_RendererFlip flip)
+{
+        SDL_Rect source = {.x = self->tile_size * column,
+                           .y = self->tile_size * row,
+                           .w = self->tile_size,
+                           .h = self->tile_size };
+        SDL_RenderCopyEx(render, self->texture, &source, &target, angle, center, flip);
+}
+
 void tile_sheet_free(TileSheet *self)
 {
         if (!self) {
