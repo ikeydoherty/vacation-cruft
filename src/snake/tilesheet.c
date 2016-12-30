@@ -62,8 +62,13 @@ TileSheet *tile_sheet_new(const char *path, int tile_size, SDL_Renderer *render,
         return ret;
 }
 
-void tile_sheet_render(TileSheet *sheet, int column, int row, SDL_Renderer *render, SDL_Rect target)
+void tile_sheet_render(TileSheet *self, int column, int row, SDL_Renderer *render, SDL_Rect target)
 {
+        SDL_Rect source = {.x = self->tile_size * column,
+                           .y = self->tile_size * row,
+                           .w = self->tile_size,
+                           .h = self->tile_size };
+        SDL_RenderCopy(render, self->texture, &source, &target);
 }
 
 void tile_sheet_free(TileSheet *self)
