@@ -67,7 +67,6 @@ void snake_app_free(SnakeApp *self)
         free(self);
 
         /* Free SDL resources */
-        fprintf(stderr, "debug: Closing SDL\n");
         SDL_QuitSubSystem(SDL_INIT_VIDEO);
         SDL_Quit();
 }
