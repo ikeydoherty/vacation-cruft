@@ -133,19 +133,38 @@ void player_update(Player *self, FrameInfo *frame)
 
         /* Animation finished */
         if (factor == 1.0f) {
+                int target_x = head->target_x;
+                int target_y = head->target_y;
+                int start_x = head->start_x;
+                int start_y = head->start_y;
+                PlayerDirection hdir = head->dir;
+
                 head->start_x = head->x = head->target_x;
                 head->start_y = head->y = head->target_y;
+                head->dir = self->dir;
                 self->tick_start = 0;
+
                 /* Continue movement in current direction */
                 PlayerDirection dir = self->dir;
                 self->dir = -1;
                 self->moving = false;
                 player_set_direction(self, dir);
 
+                if (self->n_segments > 1) {
+                        self->segments[1].start_x = start_x;
+                        self->segments[1].x = start_x;
+                        self->segments[1].target_x = target_x;
+                        self->segments[1].start_y = start_y;
+                        self->segments[1].target_y = target_y;
+                        self->segments[1].y = start_y;
+                        self->segments[1].dir = hdir;
+                }
+
                 /* Clone segment behaviour */
-                for (int i = self->n_segments - 1; i > 0; i--) {
+                for (int i = self->n_segments - 1; i > 1; i--) {
                         self->segments[i] = self->segments[i - 1];
                 }
+
                 return;
         }
 
