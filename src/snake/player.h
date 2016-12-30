@@ -19,6 +19,14 @@
 typedef enum { DIR_UP = 0, DIR_DOWN, DIR_LEFT, DIR_RIGHT } PlayerDirection;
 
 /**
+ * A PlayerSegment represents each segment in the body of a snake
+ */
+typedef struct PlayerSegment {
+        int x;
+        int y;
+} PlayerSegment;
+
+/**
  * A Player is the actual human controlled snake on screen
  */
 typedef struct Player {
@@ -29,6 +37,9 @@ typedef struct Player {
 
         /* How many blocks per second to travel */
         int speed;
+
+        PlayerSegment *segments;
+        int n_segments;
 } Player;
 
 /**

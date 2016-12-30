@@ -15,11 +15,21 @@ Player *player_new(TileSheet *sheet)
 {
         Player p = {.sheet = sheet, .dir = DIR_RIGHT, .speed = 7 };
         Player *ret = NULL;
+        PlayerSegment *segments = NULL;
+
+        /* Limit to 60 segments of the snake for now */
+        segments = calloc(60, sizeof(PlayerSegment));
+        if (!segments) {
+                return NULL;
+        }
 
         ret = calloc(1, sizeof(Player));
         if (!ret) {
+                free(segments);
                 return NULL;
         }
+        p.segments = segments;
+        p.n_segments = 0;
         *ret = p;
         return ret;
 }
@@ -29,6 +39,7 @@ void player_free(Player *self)
         if (!self) {
                 return;
         }
+        free(self->segments);
         free(self);
 }
 
