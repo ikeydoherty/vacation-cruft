@@ -21,6 +21,7 @@ typedef struct FrameInfo {
         SDL_Renderer *render;
         SDL_Rect rect;
         uint32_t ticks;
+        uint32_t prev_ticks;
 } FrameInfo;
 
 /**

@@ -88,6 +88,7 @@ int snake_app_run(SnakeApp *self)
         uint32_t tick_start = 0;
         FrameInfo frame = {.render = self->render,
                            .ticks = 0,
+                           .prev_ticks = 0,
                            .rect = (SDL_Rect){
                                .x = 0, .y = 0, .w = 800, .h = 600,
                            } };
@@ -108,7 +109,9 @@ int snake_app_run(SnakeApp *self)
         }
 
         self->running = true;
-        tick_start = 0;
+        tick_start = SDL_GetTicks();
+
+        frame.prev_ticks = tick_start - 1;
 
         /* Handle main loop */
         while (self->running) {
@@ -117,6 +120,7 @@ int snake_app_run(SnakeApp *self)
                 snake_app_draw(self, &frame);
 
                 /* TODO: cap fps */
+                frame.prev_ticks = frame.ticks;
         }
 
         return ret;

@@ -13,7 +13,7 @@
 
 Player *player_new(TileSheet *sheet)
 {
-        Player p = {.sheet = sheet };
+        Player p = {.sheet = sheet, .dir = DIR_RIGHT, .speed = 7 };
         Player *ret = NULL;
 
         ret = calloc(1, sizeof(Player));
@@ -39,13 +39,33 @@ void player_set_direction(Player *self, PlayerDirection direction)
 
 void player_update(Player *self, FrameInfo *frame)
 {
-        /* Currently a no-op */
+        double in_second = (frame->ticks - frame->prev_ticks) / 1000.0;
+        if (in_second > 1.0) {
+                return;
+        }
+        int distance = (int)((32 * self->speed) * in_second);
+
+        switch (self->dir) {
+        case DIR_UP:
+                self->y -= distance;
+                break;
+        case DIR_DOWN:
+                self->y += distance;
+                break;
+        case DIR_LEFT:
+                self->x -= distance;
+                break;
+        case DIR_RIGHT:
+        default:
+                self->x += distance;
+                break;
+        }
 }
 
 void player_draw(Player *self, FrameInfo *info)
 {
         /* DEMO CODE */
-        SDL_Rect rect = {.x = 0, .y = 0, .w = 32, .h = 32 };
+        SDL_Rect rect = {.x = self->x, .y = self->y, .w = 32, .h = 32 };
         tile_sheet_render(self->sheet, 1, 0, info->render, rect);
 }
 

@@ -24,6 +24,11 @@ typedef enum { DIR_UP = 0, DIR_DOWN, DIR_LEFT, DIR_RIGHT } PlayerDirection;
 typedef struct Player {
         TileSheet *sheet;
         PlayerDirection dir;
+        int x;
+        int y;
+
+        /* How many blocks per second to travel */
+        int speed;
 } Player;
 
 /**
