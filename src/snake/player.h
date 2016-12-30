@@ -25,6 +25,9 @@ typedef struct PlayerSegment {
         int x;
         int y;
         PlayerDirection dir;
+
+        int target_x;
+        int target_y;
 } PlayerSegment;
 
 /**

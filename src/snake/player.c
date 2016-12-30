@@ -48,34 +48,58 @@ void player_free(Player *self)
 void player_set_direction(Player *self, PlayerDirection direction)
 {
         /* Forbid inversing the direction */
+        int tile_size = 32;
+        int rows = 600 / tile_size;
+        int cols = 800 / tile_size;
+
+        fprintf(stderr, "Have %d rows, %d columns\n", rows, cols);
+
+        /* Current row/column */
+        int row = (int)floor((int)floor(self->segments[0].y) % rows);
+        int col = (int)floor((int)floor(self->segments[0].x) % cols);
+
         switch (direction) {
         case DIR_UP:
                 if (self->dir == DIR_DOWN) {
                         return;
                 }
+                row--;
                 break;
         case DIR_DOWN:
                 if (self->dir == DIR_UP) {
                         return;
                 }
+                row++;
                 break;
         case DIR_LEFT:
                 if (self->dir == DIR_RIGHT) {
                         return;
                 }
+                col--;
                 break;
         case DIR_RIGHT:
         default:
                 if (self->dir == DIR_LEFT) {
                         return;
                 }
+                col++;
                 break;
         }
         self->dir = direction;
+        self->segments[0].target_x = col * tile_size;
+        self->segments[0].target_y = row * tile_size;
+
+        fprintf(stderr,
+                "Target: C: %d R: %d (X: %d Y: %d)\n",
+                col,
+                row,
+                self->segments[0].target_x,
+                self->segments[0].target_y);
 }
 
 void player_update(Player *self, FrameInfo *frame)
 {
+        /*
         double in_second = (frame->ticks - frame->prev_ticks) / 1000.0;
         if (in_second > 1.0) {
                 return;
@@ -102,6 +126,7 @@ void player_update(Player *self, FrameInfo *frame)
                 self->segments[i].x = self->segments[i - 1].x;
                 self->segments[i].y = self->segments[i - 1].y;
         }
+        */
 }
 
 void player_draw(Player *self, FrameInfo *info)
