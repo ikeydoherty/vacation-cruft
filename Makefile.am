@@ -14,6 +14,8 @@ snake_SOURCES = \
 	src/snake/app.c \
 	src/snake/draw.c \
 	src/snake/main.c \
+	src/snake/player.h \
+	src/snake/player.c \
 	src/snake/sprite.h \
 	src/snake/tilesheet.h \
 	src/snake/tilesheet.c \
