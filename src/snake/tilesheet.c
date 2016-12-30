@@ -27,6 +27,9 @@ static SDL_Texture *load_texture(const char *path, SDL_Renderer *ren, SDL_Window
                 return NULL;
         }
 
+        /* Mask magenta as transparent */
+        SDL_SetColorKey(img_surface, SDL_TRUE, 0xFF00FF);
+
         /* If the window has no surface, we can't optimize it */
         win_surface = SDL_GetWindowSurface(window);
         if (!win_surface) {
