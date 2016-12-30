@@ -126,9 +126,9 @@ void player_update(Player *self, FrameInfo *frame)
                 self->tick_start = frame->ticks;
         }
 
-        /* Find out the completion for movement over .2 seconds to move one block */
+        /* Find out the completion for movement over 1 seconds to move one block */
         double elapsed = (double)(frame->ticks - self->tick_start);
-        float factor = clampf((float)(elapsed / 200.0), 0.0f, 1.0f);
+        float factor = clampf((float)(elapsed / 1000.0), 0.0f, 1.0f);
 
         /* Animation finished */
         if (factor == 1.0f) {
