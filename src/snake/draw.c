@@ -22,13 +22,13 @@ void snake_app_draw(SnakeApp *self, FrameInfo *frame)
 
         /* Derpy - draw "high score" */
         SDL_Rect rect = { .x = 0, .y = 0, .w = 32, .h = 32};
-        tile_sheet_render(self->sheet, 1, 2, self->render, rect);
+        tile_sheet_render(self->sheet, 0, 2, self->render, rect);
         rect.x += 32;
         tile_sheet_render(self->sheet, 2, 2, self->render, rect);
         rect.x += 32;
-        tile_sheet_render(self->sheet, 3, 2, self->render, rect);
+        tile_sheet_render(self->sheet, 7, 2, self->render, rect);
         rect.x += 32;
-        tile_sheet_render(self->sheet, 4, 2, self->render, rect);
+        tile_sheet_render(self->sheet, 6, 2, self->render, rect);
 
         /* Flip to screen */
         SDL_RenderPresent(self->render);
