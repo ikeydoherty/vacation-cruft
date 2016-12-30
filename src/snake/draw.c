@@ -18,7 +18,9 @@ void snake_app_draw(SnakeApp *self, FrameInfo *frame)
         SDL_RenderClear(self->render);
 
         /* TODO: Draw sprites */
-
+        /* DEMO CODE */
+        SDL_Rect rect = { 0, 0, 32, 32 };
+        tile_sheet_render(self->sheet, 1, 1, self->render, rect);
         /* Flip to screen */
         SDL_RenderPresent(self->render);
 }
