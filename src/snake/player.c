@@ -121,11 +121,19 @@ void player_update(Player *self, FrameInfo *frame)
                 return;
         }
 
-        /* Work out if we made it, within 1px of target */
-        if ((head->x >= head->target_x && head->x <= head->target_x + 1) &&
-            (head->y >= head->target_y && head->y <= head->target_y + 1)) {
-                head->x = head->start_x = head->target_x;
-                head->y = head->start_y = head->target_y;
+        /* Reset tick start for the new frame */
+        if (self->tick_start < 1) {
+                self->tick_start = frame->ticks;
+        }
+
+        /* Find out the completion for movement over .2 seconds to move one block */
+        double elapsed = (double)(frame->ticks - self->tick_start);
+        float factor = clampf((float)(elapsed / 200.0), 0.0f, 1.0f);
+
+        /* Animation finished */
+        if (factor == 1.0f) {
+                head->start_x = head->x = head->target_x;
+                head->start_y = head->y = head->target_y;
                 self->tick_start = 0;
                 /* Continue movement in current direction */
                 PlayerDirection dir = self->dir;
@@ -135,15 +143,6 @@ void player_update(Player *self, FrameInfo *frame)
                 return;
         }
 
-        /* Reset tick start for the new frame */
-        if (self->tick_start < 1) {
-                self->tick_start = frame->ticks;
-                return;
-        }
-
-        /* Find out the completion for movement over .2 seconds to move one block */
-        double elapsed = (double)(frame->ticks - self->tick_start);
-        float factor = clampf((float)(elapsed / 200.0), 0.0f, 1.0f);
         double deltaX = (double)(head->target_x - head->start_x) * factor;
         double deltaY = (double)(head->target_y - head->start_y) * factor;
 
