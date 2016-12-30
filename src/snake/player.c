@@ -13,7 +13,7 @@
 
 Player *player_new(TileSheet *sheet)
 {
-        Player p = {.sheet = sheet, .dir = DIR_RIGHT, .speed = 4 };
+        Player p = {.sheet = sheet, .dir = -1 };
         Player *ret = NULL;
         PlayerSegment *segments = NULL;
 
@@ -45,6 +45,16 @@ void player_free(Player *self)
         free(self);
 }
 
+static inline double clamp(double v, double min, double max)
+{
+        return ((v < min ? min : v) > max ? max : (v < min ? min : v));
+}
+
+static inline float clampf(float v, float min, float max)
+{
+        return ((v < min ? min : v) > max ? max : (v < min ? min : v));
+}
+
 void player_set_direction(Player *self, PlayerDirection direction)
 {
         /* Forbid inversing the direction */
@@ -52,11 +62,13 @@ void player_set_direction(Player *self, PlayerDirection direction)
         int rows = 600 / tile_size;
         int cols = 800 / tile_size;
 
-        fprintf(stderr, "Have %d rows, %d columns\n", rows, cols);
+        if (direction == self->dir) {
+                return;
+        }
 
         /* Current row/column */
-        int row = (int)floor((int)floor(self->segments[0].y) % rows);
-        int col = (int)floor((int)floor(self->segments[0].x) % cols);
+        int row = (int)(self->segments[0].y / tile_size) % (rows);
+        int col = (int)(self->segments[0].x / tile_size) % (cols);
 
         switch (direction) {
         case DIR_UP:
@@ -86,42 +98,59 @@ void player_set_direction(Player *self, PlayerDirection direction)
                 break;
         }
         self->dir = direction;
+
+        if (self->moving) {
+                return;
+        }
+
+        self->moving = true;
+
+        self->segments[0].start_x = self->segments[0].x;
+        self->segments[0].start_y = self->segments[0].y;
         self->segments[0].target_x = col * tile_size;
         self->segments[0].target_y = row * tile_size;
-
-        fprintf(stderr,
-                "Target: C: %d R: %d (X: %d Y: %d)\n",
-                col,
-                row,
-                self->segments[0].target_x,
-                self->segments[0].target_y);
 }
 
 void player_update(Player *self, FrameInfo *frame)
 {
-        /*
-        double in_second = (frame->ticks - frame->prev_ticks) / 1000.0;
-        if (in_second > 1.0) {
+        PlayerSegment *head = NULL;
+
+        head = &self->segments[0];
+
+        if (!self->moving) {
                 return;
         }
-        int distance = (int)((32 * self->speed) * in_second);
 
-        switch (self->dir) {
-        case DIR_UP:
-                self->segments[0].y -= distance;
-                break;
-        case DIR_DOWN:
-                self->segments[0].y += distance;
-                break;
-        case DIR_LEFT:
-                self->segments[0].x -= distance;
-                break;
-        case DIR_RIGHT:
-        default:
-                self->segments[0].x += distance;
-                break;
+        /* Work out if we made it, within 1px of target */
+        if ((head->x >= head->target_x && head->x <= head->target_x + 1) &&
+            (head->y >= head->target_y && head->y <= head->target_y + 1)) {
+                head->x = head->start_x = head->target_x;
+                head->y = head->start_y = head->target_y;
+                self->tick_start = 0;
+                /* Continue movement in current direction */
+                PlayerDirection dir = self->dir;
+                self->dir = -1;
+                self->moving = false;
+                player_set_direction(self, dir);
+                return;
         }
 
+        /* Reset tick start for the new frame */
+        if (self->tick_start < 1) {
+                self->tick_start = frame->ticks;
+                return;
+        }
+
+        /* Find out the completion for movement over .2 seconds to move one block */
+        double elapsed = (double)(frame->ticks - self->tick_start);
+        float factor = clampf((float)(elapsed / 200.0), 0.0f, 1.0f);
+        double deltaX = (double)(head->target_x - head->start_x) * factor;
+        double deltaY = (double)(head->target_y - head->start_y) * factor;
+
+        head->x = (int)(head->start_x + deltaX);
+        head->y = (int)(head->start_y + deltaY);
+
+        /*
         for (int i = self->n_segments; i > 0; i--) {
                 self->segments[i].x = self->segments[i - 1].x;
                 self->segments[i].y = self->segments[i - 1].y;

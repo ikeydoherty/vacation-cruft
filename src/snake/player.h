@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <stdbool.h>
+
 #include "sprite.h"
 #include "tilesheet.h"
 
@@ -26,6 +28,8 @@ typedef struct PlayerSegment {
         int y;
         PlayerDirection dir;
 
+        int start_x;
+        int start_y;
         int target_x;
         int target_y;
 } PlayerSegment;
@@ -37,11 +41,10 @@ typedef struct Player {
         TileSheet *sheet;
         PlayerDirection dir;
 
-        /* How many blocks per second to travel */
-        int speed;
-
         PlayerSegment *segments;
         int n_segments;
+        uint32_t tick_start;
+        bool moving;
 } Player;
 
 /**

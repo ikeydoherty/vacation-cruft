@@ -28,7 +28,9 @@ void snake_app_update_keyboard(SnakeApp *self, SDL_KeyboardEvent *event)
                 player_set_direction(self->player, DIR_LEFT);
                 break;
         case SDLK_RIGHT:
-                player_set_direction(self->player, DIR_RIGHT);
+                if (event->state == SDL_RELEASED) {
+                        player_set_direction(self->player, DIR_RIGHT);
+                }
                 break;
         /* Temporary */
         case SDLK_SPACE:
