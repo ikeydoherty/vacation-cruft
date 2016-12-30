@@ -30,6 +30,12 @@ void snake_app_update_keyboard(SnakeApp *self, SDL_KeyboardEvent *event)
         case SDLK_RIGHT:
                 player_set_direction(self->player, DIR_RIGHT);
                 break;
+        /* Temporary */
+        case SDLK_SPACE:
+                if (event->state == SDL_RELEASED) {
+                        player_grow(self->player);
+                }
+                break;
         /* Full screen */
         case SDLK_RETURN:
                 if (event->keysym.mod & KMOD_ALT && event->state == SDL_RELEASED) {

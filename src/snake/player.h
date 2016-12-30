@@ -63,6 +63,11 @@ void player_update(Player *player, FrameInfo *frame);
 void player_draw(Player *player, FrameInfo *frame);
 
 /**
+ * Grow the player by one (for testing)
+ */
+void player_grow(Player *player);
+
+/**
  * Cleanup a previously created player
  */
 void player_free(Player *player);

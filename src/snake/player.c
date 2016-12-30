@@ -13,7 +13,7 @@
 
 Player *player_new(TileSheet *sheet)
 {
-        Player p = {.sheet = sheet, .dir = DIR_RIGHT, .speed = 7 };
+        Player p = {.sheet = sheet, .dir = DIR_RIGHT, .speed = 4 };
         Player *ret = NULL;
         PlayerSegment *segments = NULL;
 
@@ -118,6 +118,11 @@ void player_draw(Player *self, FrameInfo *info)
                 break;
         }
         tile_sheet_render_ex(self->sheet, 1, 0, info->render, rect, angle, NULL, SDL_FLIP_NONE);
+}
+
+void player_grow(Player *player)
+{
+        /* TODO: Anything.. */
 }
 
 /*
