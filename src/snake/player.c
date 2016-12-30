@@ -156,39 +156,43 @@ void player_update(Player *self, FrameInfo *frame)
         head->y = (int)(head->start_y + deltaY);
 }
 
-void player_draw(Player *self, FrameInfo *info)
+static void render_segment(Player *self, FrameInfo *info, PlayerSegment *segment, int i)
 {
-        /* DEMO CODE */
         SDL_Rect rect = {.x = 0, .y = 0, .w = 32, .h = 32 };
 
+        double angle = 0.0;
+        switch (segment->dir) {
+        case DIR_UP:
+                angle = -90.0;
+                break;
+        case DIR_DOWN:
+                angle = 90.0;
+                break;
+        case DIR_LEFT:
+                angle = -180.0;
+                break;
+        case DIR_RIGHT:
+        default:
+                angle = 0.0;
+                break;
+        }
+        int tile_no = i == 0 ? 1 : 0;
+        rect.x = segment->x;
+        rect.y = segment->y;
+        tile_sheet_render_ex(self->sheet,
+                             tile_no,
+                             0,
+                             info->render,
+                             rect,
+                             angle,
+                             NULL,
+                             SDL_FLIP_NONE);
+}
+
+void player_draw(Player *self, FrameInfo *info)
+{
         for (int i = 0; i < self->n_segments; i++) {
-                double angle = 0.0;
-                switch (self->segments[i].dir) {
-                case DIR_UP:
-                        angle = -90.0;
-                        break;
-                case DIR_DOWN:
-                        angle = 90.0;
-                        break;
-                case DIR_LEFT:
-                        angle = -180.0;
-                        break;
-                case DIR_RIGHT:
-                default:
-                        angle = 0.0;
-                        break;
-                }
-                int tile_no = i == 0 ? 1 : 0;
-                rect.x = self->segments[i].x;
-                rect.y = self->segments[i].y;
-                tile_sheet_render_ex(self->sheet,
-                                     tile_no,
-                                     0,
-                                     info->render,
-                                     rect,
-                                     angle,
-                                     NULL,
-                                     SDL_FLIP_NONE);
+                render_segment(self, info, &self->segments[i], i);
         }
 }
 
