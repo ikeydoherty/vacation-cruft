@@ -14,6 +14,7 @@ m4_define([sdl_required_version], [2.0.0])
 PKG_CHECK_MODULES(SDL,
                  [
                    sdl2 >= sdl_required_version
+                   SDL2_image >= sdl_required_version
                  ]
 )
 

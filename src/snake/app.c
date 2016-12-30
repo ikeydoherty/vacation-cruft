@@ -10,6 +10,7 @@
  */
 
 #include <SDL.h>
+#include <SDL_image.h>
 
 #include "app.h"
 #include "sprite.h"
@@ -20,6 +21,11 @@ SnakeApp *snake_app_new()
 
         if (SDL_Init(SDL_INIT_VIDEO) != 0) {
                 fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
+                return NULL;
+        }
+
+        if (IMG_Init(0 & IMG_INIT_PNG) != 0) {
+                fprintf(stderr, "Failed to initialise SDL Image: %s\n", IMG_GetError());
                 return NULL;
         }
 
@@ -69,6 +75,7 @@ void snake_app_free(SnakeApp *self)
         /* Free SDL resources */
         SDL_QuitSubSystem(SDL_INIT_VIDEO);
         SDL_Quit();
+        IMG_Quit();
 }
 
 int snake_app_run(SnakeApp *self)
