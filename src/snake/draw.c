@@ -17,24 +17,8 @@ void snake_app_draw(SnakeApp *self, FrameInfo *frame)
         SDL_SetRenderDrawColor(self->render, 169, 203, 152, 255);
         SDL_RenderClear(self->render);
 
-        /* TODO: Draw sprites */
-        /* DEMO CODE */
-        SDL_Rect rect = { 0, 0, 32, 32 };
-        tile_sheet_render(self->sheet, 1, 1, self->render, rect);
-        rect.x += 32;
-        tile_sheet_render(self->sheet, 2, 1, self->render, rect);
-        rect.x += 32;
-        tile_sheet_render(self->sheet, 3, 1, self->render, rect);
-        rect.y += 64;
-
-        rect.x = 32;
-        tile_sheet_render(self->sheet, 0, 0, self->render, rect);
-        rect.x += 32;
-        tile_sheet_render(self->sheet, 0, 0, self->render, rect);
-        rect.x += 32;
-        tile_sheet_render(self->sheet, 0, 0, self->render, rect);
-        rect.x += 32;
-        tile_sheet_render(self->sheet, 1, 0, self->render, rect);
+        /* Draw the player */
+        player_draw(self->player, frame);
 
         /* Flip to screen */
         SDL_RenderPresent(self->render);

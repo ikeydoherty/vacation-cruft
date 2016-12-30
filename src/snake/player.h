@@ -11,19 +11,40 @@
 
 #pragma once
 
+#include "sprite.h"
 #include "tilesheet.h"
+
+/**
+ * Valid direction (one only) for a player */
+typedef enum { DIR_UP = 0, DIR_DOWN, DIR_LEFT, DIR_RIGHT } PlayerDirection;
 
 /**
  * A Player is the actual human controlled snake on screen
  */
 typedef struct Player {
         TileSheet *sheet;
+        PlayerDirection dir;
 } Player;
 
 /**
  * Construct a new player using the given tilesheet
  */
 Player *player_new(TileSheet *sheet);
+
+/**
+ * Set the new direction for the player
+ */
+void player_set_direction(Player *player, PlayerDirection direction);
+
+/**
+ * Update the player within the world
+ */
+void player_update(Player *player, FrameInfo *frame);
+
+/**
+ * Render the player within the world
+ */
+void player_draw(Player *player, FrameInfo *frame);
 
 /**
  * Cleanup a previously created player

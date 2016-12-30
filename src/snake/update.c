@@ -16,17 +16,32 @@
  */
 void snake_app_update_keyboard(SnakeApp *self, SDL_KeyboardEvent *event)
 {
-        /* Handle pressed events */
-        if (event->state == SDL_PRESSED) {
-                if (event->keysym.sym == SDLK_q) {
+        switch (event->keysym.sym) {
+        /* Player direction */
+        case SDLK_UP:
+                player_set_direction(self->player, DIR_UP);
+                break;
+        case SDLK_DOWN:
+                player_set_direction(self->player, DIR_DOWN);
+                break;
+        case SDLK_LEFT:
+                player_set_direction(self->player, DIR_LEFT);
+                break;
+        case SDLK_RIGHT:
+                player_set_direction(self->player, DIR_RIGHT);
+                break;
+        /* Full screen */
+        case SDLK_RETURN:
+                if (event->keysym.mod & KMOD_ALT && event->state == SDL_RELEASED) {
+                        snake_app_set_fullscreen(self, !self->fullscreen);
+                }
+                break;
+        /* Quit */
+        case SDLK_q:
+                if (event->state == SDL_PRESSED) {
                         self->running = false;
                 }
-                return;
-        }
-
-        /* Handle released events */
-        if (event->keysym.sym == SDLK_RETURN && (event->keysym.mod & KMOD_ALT)) {
-                snake_app_set_fullscreen(self, !self->fullscreen);
+                break;
         }
 }
 
@@ -49,6 +64,9 @@ void snake_app_update(SnakeApp *self, FrameInfo *frame)
                         break;
                 }
         }
+
+        /* Update the player */
+        player_update(self->player, frame);
 }
 
 /*

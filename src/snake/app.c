@@ -69,6 +69,7 @@ void snake_app_free(SnakeApp *self)
 
         /* Free textures */
         tile_sheet_free(self->sheet);
+        player_free(self->player);
 
         /* Free our resources */
         SDL_DestroyWindow(self->window);
@@ -97,6 +98,12 @@ int snake_app_run(SnakeApp *self)
         /* Load assets */
         self->sheet = tile_sheet_new("data/sheet.png", 32, self->render, self->window);
         if (!self->sheet) {
+                return EXIT_FAILURE;
+        }
+
+        /* Create our player */
+        self->player = player_new(self->sheet);
+        if (!self->player) {
                 return EXIT_FAILURE;
         }
 

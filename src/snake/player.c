@@ -32,6 +32,23 @@ void player_free(Player *self)
         free(self);
 }
 
+void player_set_direction(Player *self, PlayerDirection direction)
+{
+        self->dir = direction;
+}
+
+void player_update(Player *self, FrameInfo *frame)
+{
+        /* Currently a no-op */
+}
+
+void player_draw(Player *self, FrameInfo *info)
+{
+        /* DEMO CODE */
+        SDL_Rect rect = {.x = 0, .y = 0, .w = 32, .h = 32 };
+        tile_sheet_render(self->sheet, 1, 0, info->render, rect);
+}
+
 /*
  * Editor modelines  -  https://www.wireshark.org/tools/modelines.html
  *

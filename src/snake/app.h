@@ -14,6 +14,7 @@
 #include <SDL.h>
 #include <stdbool.h>
 
+#include "player.h"
 #include "sprite.h"
 #include "tilesheet.h"
 #include "util.h"
@@ -27,6 +28,7 @@ typedef struct SnakeApp {
         bool running;
         bool fullscreen;
         TileSheet *sheet;
+        Player *player;
 } SnakeApp;
 
 /**
