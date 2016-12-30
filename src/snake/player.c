@@ -31,6 +31,8 @@ Player *player_new(TileSheet *sheet)
         p.segments = segments;
         p.n_segments = 0;
         *ret = p;
+        /* Add one element */
+        player_grow(ret);
         return ret;
 }
 
@@ -82,17 +84,17 @@ void player_update(Player *self, FrameInfo *frame)
 
         switch (self->dir) {
         case DIR_UP:
-                self->y -= distance;
+                self->segments[0].y -= distance;
                 break;
         case DIR_DOWN:
-                self->y += distance;
+                self->segments[0].y += distance;
                 break;
         case DIR_LEFT:
-                self->x -= distance;
+                self->segments[0].x -= distance;
                 break;
         case DIR_RIGHT:
         default:
-                self->x += distance;
+                self->segments[0].x += distance;
                 break;
         }
 }
@@ -100,7 +102,7 @@ void player_update(Player *self, FrameInfo *frame)
 void player_draw(Player *self, FrameInfo *info)
 {
         /* DEMO CODE */
-        SDL_Rect rect = {.x = self->x, .y = self->y, .w = 32, .h = 32 };
+        SDL_Rect rect = {.x = 0, .y = 0, .w = 32, .h = 32 };
         double angle = 0.0;
         switch (self->dir) {
         case DIR_UP:
@@ -117,13 +119,13 @@ void player_draw(Player *self, FrameInfo *info)
                 angle = 0.0;
                 break;
         }
-        tile_sheet_render_ex(self->sheet, 1, 0, info->render, rect, angle, NULL, SDL_FLIP_NONE);
 
         for (int i = 0; i < self->n_segments; i++) {
+                int tile_no = i == 0 ? 1 : 0;
                 rect.x = self->segments[i].x;
                 rect.y = self->segments[i].y;
                 tile_sheet_render_ex(self->sheet,
-                                     0,
+                                     tile_no,
                                      0,
                                      info->render,
                                      rect,
@@ -142,8 +144,8 @@ void player_grow(Player *self)
 
         self->n_segments++;
         segment = &self->segments[self->n_segments - 1];
-        segment->x = self->x;
-        segment->y = self->y;
+        segment->x = self->segments[0].x;
+        segment->y = self->segments[0].y;
 }
 
 /*

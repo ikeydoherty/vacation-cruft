@@ -32,8 +32,6 @@ typedef struct PlayerSegment {
 typedef struct Player {
         TileSheet *sheet;
         PlayerDirection dir;
-        int x;
-        int y;
 
         /* How many blocks per second to travel */
         int speed;
