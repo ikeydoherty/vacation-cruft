@@ -21,6 +21,11 @@ void snake_app_draw(SnakeApp *self, FrameInfo *frame)
         /* DEMO CODE */
         SDL_Rect rect = { 0, 0, 32, 32 };
         tile_sheet_render(self->sheet, 1, 1, self->render, rect);
+        rect.x += 32;
+        tile_sheet_render(self->sheet, 2, 1, self->render, rect);
+        rect.x += 32;
+        tile_sheet_render(self->sheet, 3, 1, self->render, rect);
+
         /* Flip to screen */
         SDL_RenderPresent(self->render);
 }
