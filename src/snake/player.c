@@ -118,11 +118,32 @@ void player_draw(Player *self, FrameInfo *info)
                 break;
         }
         tile_sheet_render_ex(self->sheet, 1, 0, info->render, rect, angle, NULL, SDL_FLIP_NONE);
+
+        for (int i = 0; i < self->n_segments; i++) {
+                rect.x = self->segments[i].x;
+                rect.y = self->segments[i].y;
+                tile_sheet_render_ex(self->sheet,
+                                     0,
+                                     0,
+                                     info->render,
+                                     rect,
+                                     angle,
+                                     NULL,
+                                     SDL_FLIP_NONE);
+        }
 }
 
-void player_grow(Player *player)
+void player_grow(Player *self)
 {
-        /* TODO: Anything.. */
+        PlayerSegment *segment = NULL;
+        if (self->n_segments + 1 > 60) {
+                return;
+        }
+
+        self->n_segments++;
+        segment = &self->segments[self->n_segments - 1];
+        segment->x = self->x;
+        segment->y = self->y;
 }
 
 /*
