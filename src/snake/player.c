@@ -97,6 +97,11 @@ void player_update(Player *self, FrameInfo *frame)
                 self->segments[0].x += distance;
                 break;
         }
+
+        for (int i = self->n_segments; i > 0; i--) {
+                self->segments[i].x = self->segments[i - 1].x;
+                self->segments[i].y = self->segments[i - 1].y;
+        }
 }
 
 void player_draw(Player *self, FrameInfo *info)
@@ -143,9 +148,13 @@ void player_grow(Player *self)
         }
 
         self->n_segments++;
-        segment = &self->segments[self->n_segments - 1];
-        segment->x = self->segments[0].x;
-        segment->y = self->segments[0].y;
+        int seg = self->n_segments - 1;
+        segment = &self->segments[seg];
+
+        segment->x = self->segments[seg].x;
+        segment->y = self->segments[seg].y;
+        /* Currently unused */
+        segment->dir = self->dir;
 }
 
 /*

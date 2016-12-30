@@ -24,6 +24,7 @@ typedef enum { DIR_UP = 0, DIR_DOWN, DIR_LEFT, DIR_RIGHT } PlayerDirection;
 typedef struct PlayerSegment {
         int x;
         int y;
+        PlayerDirection dir;
 } PlayerSegment;
 
 /**
