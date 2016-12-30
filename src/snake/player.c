@@ -143,7 +143,7 @@ void player_update(Player *self, FrameInfo *frame)
                 player_set_direction(self, dir);
 
                 /* Clone segment behaviour */
-                for (int i = self->n_segments; i > 0; i--) {
+                for (int i = self->n_segments - 1; i > 0; i--) {
                         self->segments[i] = self->segments[i - 1];
                 }
                 return;
