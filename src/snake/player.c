@@ -236,15 +236,17 @@ void player_grow(Player *self)
         self->n_segments++;
         int seg = self->n_segments - 1;
         segment = &self->segments[seg];
-
-        segment->x = self->segments[seg].x;
-        segment->y = self->segments[seg].y;
         segment->dir = self->dir;
 
         /* First segment */
         if (seg == 0) {
+                segment->x = 64;
+                segment->y = 64;
                 return;
         }
+
+        segment->x = self->segments[seg - 1].start_x;
+        segment->y = self->segments[seg - 1].start_y;
 
         switch (self->dir) {
         case DIR_UP:
@@ -263,8 +265,8 @@ void player_grow(Player *self)
 
         segment->start_x = segment->x;
         segment->start_y = segment->y;
-        segment->target_x = self->segments[seg - 1].x;
-        segment->target_y = self->segments[seg - 1].y;
+        segment->target_x = self->segments[seg - 1].start_x;
+        segment->target_y = self->segments[seg - 1].start_y;
         segment->dir = self->segments[seg - 1].dir;
 }
 
