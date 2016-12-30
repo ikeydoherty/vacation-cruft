@@ -20,6 +20,16 @@ void snake_app_draw(SnakeApp *self, FrameInfo *frame)
         /* Draw the player */
         player_draw(self->player, frame);
 
+        /* Derpy - draw "high score" */
+        SDL_Rect rect = { .x = 0, .y = 0, .w = 32, .h = 32};
+        tile_sheet_render(self->sheet, 1, 2, self->render, rect);
+        rect.x += 32;
+        tile_sheet_render(self->sheet, 2, 2, self->render, rect);
+        rect.x += 32;
+        tile_sheet_render(self->sheet, 3, 2, self->render, rect);
+        rect.x += 32;
+        tile_sheet_render(self->sheet, 4, 2, self->render, rect);
+
         /* Flip to screen */
         SDL_RenderPresent(self->render);
 }
