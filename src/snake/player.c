@@ -109,6 +109,7 @@ void player_set_direction(Player *self, PlayerDirection direction)
         self->segments[0].start_y = self->segments[0].y;
         self->segments[0].target_x = col * tile_size;
         self->segments[0].target_y = row * tile_size;
+        self->segments[0].dir = direction;
 }
 
 void player_update(Player *self, FrameInfo *frame)
@@ -140,6 +141,11 @@ void player_update(Player *self, FrameInfo *frame)
                 self->dir = -1;
                 self->moving = false;
                 player_set_direction(self, dir);
+
+                /* Clone segment behaviour */
+                for (int i = self->n_segments; i > 0; i--) {
+                        self->segments[i] = self->segments[i - 1];
+                }
                 return;
         }
 
@@ -148,37 +154,30 @@ void player_update(Player *self, FrameInfo *frame)
 
         head->x = (int)(head->start_x + deltaX);
         head->y = (int)(head->start_y + deltaY);
-
-        /*
-        for (int i = self->n_segments; i > 0; i--) {
-                self->segments[i].x = self->segments[i - 1].x;
-                self->segments[i].y = self->segments[i - 1].y;
-        }
-        */
 }
 
 void player_draw(Player *self, FrameInfo *info)
 {
         /* DEMO CODE */
         SDL_Rect rect = {.x = 0, .y = 0, .w = 32, .h = 32 };
-        double angle = 0.0;
-        switch (self->dir) {
-        case DIR_UP:
-                angle = -90.0;
-                break;
-        case DIR_DOWN:
-                angle = 90.0;
-                break;
-        case DIR_LEFT:
-                angle = -180.0;
-                break;
-        case DIR_RIGHT:
-        default:
-                angle = 0.0;
-                break;
-        }
 
         for (int i = 0; i < self->n_segments; i++) {
+                double angle = 0.0;
+                switch (self->segments[i].dir) {
+                case DIR_UP:
+                        angle = -90.0;
+                        break;
+                case DIR_DOWN:
+                        angle = 90.0;
+                        break;
+                case DIR_LEFT:
+                        angle = -180.0;
+                        break;
+                case DIR_RIGHT:
+                default:
+                        angle = 0.0;
+                        break;
+                }
                 int tile_no = i == 0 ? 1 : 0;
                 rect.x = self->segments[i].x;
                 rect.y = self->segments[i].y;
