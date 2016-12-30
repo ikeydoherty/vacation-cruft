@@ -221,6 +221,32 @@ void player_grow(Player *self)
         segment->x = self->segments[seg].x;
         segment->y = self->segments[seg].y;
         segment->dir = self->dir;
+
+        /* First segment */
+        if (seg == 0) {
+                return;
+        }
+
+        switch (self->dir) {
+        case DIR_UP:
+                segment->y -= 32;
+                break;
+        case DIR_DOWN:
+                segment->y += 32;
+                break;
+        case DIR_LEFT:
+                segment->x -= 32;
+                break;
+        case DIR_RIGHT:
+                segment->x -= 32;
+                break;
+        }
+
+        segment->start_x = segment->x;
+        segment->start_y = segment->y;
+        segment->target_x = self->segments[seg - 1].x;
+        segment->target_y = self->segments[seg - 1].y;
+        segment->dir = self->segments[seg - 1].dir;
 }
 
 /*
