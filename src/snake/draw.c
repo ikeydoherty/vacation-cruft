@@ -25,6 +25,16 @@ void snake_app_draw(SnakeApp *self, FrameInfo *frame)
         tile_sheet_render(self->sheet, 2, 1, self->render, rect);
         rect.x += 32;
         tile_sheet_render(self->sheet, 3, 1, self->render, rect);
+        rect.y += 64;
+
+        rect.x = 32;
+        tile_sheet_render(self->sheet, 0, 0, self->render, rect);
+        rect.x += 32;
+        tile_sheet_render(self->sheet, 0, 0, self->render, rect);
+        rect.x += 32;
+        tile_sheet_render(self->sheet, 0, 0, self->render, rect);
+        rect.x += 32;
+        tile_sheet_render(self->sheet, 1, 0, self->render, rect);
 
         /* Flip to screen */
         SDL_RenderPresent(self->render);
