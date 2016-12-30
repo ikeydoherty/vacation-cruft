@@ -15,7 +15,7 @@
 
 typedef struct TileSheet {
         int tile_size;
-        SDL_Surface *surface;
+        SDL_Texture *texture;
 } TileSheet;
 
 /**
