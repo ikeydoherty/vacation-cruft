@@ -16,12 +16,21 @@ void snake_app_draw(SnakeApp *self, FrameInfo *frame)
         /* Clear the background */
         SDL_SetRenderDrawColor(self->render, 169, 203, 152, 255);
         SDL_RenderClear(self->render);
+        SDL_Rect frameRect = frame->rect;
+        frameRect.x += 5;
+        frameRect.y += 5;
+        frameRect.w -= 10;
+        frameRect.h -= 10;
+
+        /* Temporary frame */
+        SDL_SetRenderDrawColor(frame->render, 0, 0, 0, 255);
+        SDL_RenderDrawRect(frame->render, &frameRect);
 
         /* Draw the player */
         player_draw(self->player, frame);
 
         /* Derpy - draw "high score" */
-        SDL_Rect rect = { .x = 0, .y = 0, .w = 32, .h = 32};
+        SDL_Rect rect = {.x = 10, .y = 10, .w = 32, .h = 32 };
         tile_sheet_render(self->sheet, 0, 2, self->render, rect);
         rect.x += 32;
         tile_sheet_render(self->sheet, 2, 2, self->render, rect);
