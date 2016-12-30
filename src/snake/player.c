@@ -220,7 +220,6 @@ void player_grow(Player *self)
 
         segment->x = self->segments[seg].x;
         segment->y = self->segments[seg].y;
-        /* Currently unused */
         segment->dir = self->dir;
 }
 
