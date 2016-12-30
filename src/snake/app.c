@@ -67,6 +67,9 @@ void snake_app_free(SnakeApp *self)
                 return;
         }
 
+        /* Free textures */
+        tile_sheet_free(self->sheet);
+
         /* Free our resources */
         SDL_DestroyWindow(self->window);
         SDL_DestroyRenderer(self->render);
@@ -90,6 +93,12 @@ int snake_app_run(SnakeApp *self)
 
         /* Get us on screen */
         SDL_ShowWindow(self->window);
+
+        /* Load assets */
+        self->sheet = tile_sheet_new("data/sheet.png", 32, self->render, self->window);
+        if (!self->sheet) {
+                return EXIT_FAILURE;
+        }
 
         self->running = true;
         tick_start = 0;
