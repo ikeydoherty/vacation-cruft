@@ -191,9 +191,10 @@ static void render_segment(Player *self, FrameInfo *info, PlayerSegment *segment
 
 void player_draw(Player *self, FrameInfo *info)
 {
-        for (int i = 0; i < self->n_segments; i++) {
+        for (int i = 1; i < self->n_segments; i++) {
                 render_segment(self, info, &self->segments[i], i);
         }
+        render_segment(self, info, &self->segments[0], 0);
 }
 
 void player_grow(Player *self)
