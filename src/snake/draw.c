@@ -14,7 +14,7 @@
 void snake_app_draw(SnakeApp *self, FrameInfo *frame)
 {
         /* Clear the background */
-        SDL_SetRenderDrawColor(self->render, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(self->render, 169, 203, 152, 255);
         SDL_RenderClear(self->render);
 
         /* TODO: Draw sprites */
